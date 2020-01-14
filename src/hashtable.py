@@ -136,7 +136,19 @@ class HashTable:
         self.capacity *= 2
         new_storage = [None] * self.capacity
 
-        pass
+        for i in range(len(self.storage)):
+            current = self.storage[i]
+
+            while current is not None:
+                index = self._hash_mod(current.key)
+                if new_storage[index] is None:
+                    new_storage[index] = LinkedPair(current.key, current.value)
+                else:
+                    new_storage[index].next = LinkedPair(
+                        current.key, current.value)
+                current = current.next
+
+        self.storage = new_storage
 
 
 if __name__ == "__main__":
